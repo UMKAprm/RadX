@@ -35,9 +35,5 @@ void RTC_GetTime(uint32_t RTC_Counter, RTC_TimeTypeDef* RTC_TimeStruct, uint16_t
 	RTC_TimeStruct->RTC_Hours = hour;
 	RTC_TimeStruct->RTC_Minutes = min;
 	RTC_TimeStruct->RTC_Seconds = sec;
-	
-	sprintf(buffer,"%02d:%02d:%02d", RTC_TimeStruct->RTC_Hours, RTC_TimeStruct->RTC_Minutes, RTC_TimeStruct->RTC_Seconds);
-	LCD_print(36,61,1,buffer);
-		
-	LCD_Update();
+
 }
