@@ -600,6 +600,16 @@
               <FileType>1</FileType>
               <FilePath>.\User\Src\Time.c</FilePath>
             </File>
+            <File>
+              <FileName>ADC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\Src\ADC.c</FilePath>
+            </File>
+            <File>
+              <FileName>UI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\User\Src\UI.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

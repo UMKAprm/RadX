@@ -7,6 +7,7 @@
 #include "Time.h"
 
 void printTime(RTC_TimeTypeDef *rtc_time);
-void printBatteryLevel(uint8_t battery_level);
+void printBatteryLevel(void);
+void printGraph(uint16_t *mass);
 
 #endif

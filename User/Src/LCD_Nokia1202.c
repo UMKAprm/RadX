@@ -277,12 +277,12 @@ void FirstBoot(void)
 		LCD_print(79,9,1," ч ");
 	
 	//батарейка
-		LCD_DrawRect(84,48,12,20,1);
-		LCD_FillRect(86,50,8,16,1);
-		LCD_FillRect(87,46,6,2,1);
+		LCD_DrawRect(84,50,12,18,1);
+		LCD_FillRect(86,52,8,14,1);
+		LCD_FillRect(87,48,6,2,1);
 		
 	//график
-		LCD_DrawLine(0,46,82,46,1);
+		LCD_DrawLine(0,46,96,46,1);
 		
 	//накопленная доза
 		LCD_print(0,48,1,"Доза:");

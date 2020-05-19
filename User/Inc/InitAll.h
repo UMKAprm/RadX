@@ -5,5 +5,7 @@
 
 void InitAll(void);
 unsigned char RTC_Init(void);
+void Init_ADC(void);
+void Init_PWM(void);
 
 #endif

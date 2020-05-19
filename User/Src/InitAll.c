@@ -4,6 +4,7 @@
 #include "stm32f10x_rcc.h"
 #include "stm32f10x_pwr.h"
 #include "stm32f10x_conf.h"
+#include "stm32f10x_gpio.h"
 #include "system_stm32f10x.h"
 #include "LCD_Nokia1202.h"
 
@@ -11,6 +12,12 @@ void InitAll(void)
 {		
 	//инициализация тайминга
 		RTC_Init();	
+	
+	//инициализация АЦП
+		Init_ADC();
+	
+	//инициализация АЦП
+		Init_PWM();
 	
 	//enable PC
 		GPIO_InitTypeDef GPIO_InitStructure;
@@ -40,7 +47,7 @@ unsigned char RTC_Init(void)
 		RCC_BackupResetCmd(ENABLE);
 		RCC_BackupResetCmd(DISABLE);
 
-		// Установить источник тактирования кварц 32768
+		// Установить источник тактирования кварц 32,768кГц
 		RCC_LSEConfig(RCC_LSE_ON);
 		while ((RCC->BDCR & RCC_BDCR_LSERDY) != RCC_BDCR_LSERDY) {}
 		RCC_RTCCLKConfig(RCC_RTCCLKSource_LSE);
@@ -58,3 +65,34 @@ unsigned char RTC_Init(void)
 	return 0;
 }
 
+void Init_ADC(void)
+{
+	//Порт A настраивать смысла нет, все его ноги по умолчанию входы что нам и нужно
+  RCC_APB2PeriphClockCmd(RCC_APB2ENR_ADC1EN, ENABLE); //Включаем тактирование АЦП
+}
+
+void Init_PWM(void)
+{
+	//Включаем Таймер 2
+  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2,ENABLE);
+	
+	//Включем порт А
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA , ENABLE);
+		
+	GPIO_InitTypeDef PORT;
+	// Настроим ноги со светодиодами на выход
+  PORT.GPIO_Pin = GPIO_Pin_2;
+  //Будем использовать альтернативный режим а не обычный GPIO
+  PORT.GPIO_Mode = GPIO_Mode_AF_PP;
+  PORT.GPIO_Speed = GPIO_Speed_2MHz;
+  GPIO_Init(GPIOA, &PORT);
+  //Разрешаем таймеру использовать ноги PA2 для ШИМа
+  TIM2->CCER |= TIM_CCER_CC3E;
+	// Задаем инверсный ШИМ.
+  TIM2->CCMR2|=(TIM_CCMR2_OC3M_0 | TIM_CCMR2_OC3M_1 | TIM_CCMR2_OC3M_2);
+	//Запускаем таймер!
+  TIM2->CR1 |= TIM_CR1_CEN;
+	
+	TIM2->CCR3=0x7FFF; //скважность 50%
+	
+}

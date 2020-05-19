@@ -20,6 +20,8 @@
 ".\main.o"
 ".\initall.o"
 ".\time.o"
+".\adc.o"
+".\ui.o"
 --strict --scatter ".\RadX.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
